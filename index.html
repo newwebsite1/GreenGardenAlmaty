@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Garden - Посадка растений и ландшафтные услуги</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Swiper (для слайдеров) -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary: #28a745;
+            --secondary: #f8f9fa;
+        }
+        .hero-slider { height: 220px; }
+        .product-card { 
+            transition: transform 0.3s, box-shadow 0.3s; 
+            height: 100%;
+        }
+        .product-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+        .offcanvas-cart {
+            width: 400px;
+        }
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+        }
+        .product-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        .cart-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            text-align: center;
+        }
+        .landscape-section {
+            background-color: #e9f5e9;
+            padding: 60px 0;
+        }
+        .service-card {
+            height: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .service-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px;
+        }
+        .service-body {
+            background: white;
+            padding: 20px;
+            height: calc(100% - 54px);
+        }
+        .price-badge {
+            font-size: 1.1rem;
+            padding: 5px 10px;
+            background-color: #ffc107;
+            color: #212529;
+            border-radius: 20px;
+        }
+        .accordion-button:not(.collapsed) {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            color: white;
+        }
+        .add-service-btn {
+            margin-top: 15px;
+        }
+        .service-price {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .checkout-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .form-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+        .form-group-icon {
+            position: relative;
+        }
+        .form-control-icon {
+            padding-left: 40px;
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        .step.active {
+            background: var(--primary);
+            color: white;
+        }
+        .portfolio-item {
+            transition: all 0.3s ease;
+            height: 250px;
+            overflow: hidden;
+        }
+        .portfolio-item img {
+            transition: transform 0.5s ease;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(40, 167, 69, 0.85);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        /* Стили для калькулятора */
+        .calculator-card {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        .service-card {
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: #28a745;
+        }
+        .service-card .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 15px;
+        }
+        .service-card .card-body {
+            padding: 15px;
+        }
+        .service-card .form-check-input:checked + .card {
+            border-color: #28a745;
+            background-color: rgba(40, 167, 69, 0.05);
+        }
+        .service-card .form-check-input {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 24px;
+            height: 24px;
+        }
+        .service-price {
+            font-weight: bold;
+            color: #28a745;
+            font-size: 1.1rem;
+        }
+        .calculation-item {
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(255,255,255,0.3);
+        }
+        .area-input {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+        }
+        .area-slider {
+            width: 100%;
+            margin: 15px 0;
+        }
+        .area-value {
+            font-weight: bold;
+            margin-top: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #calculator-step2 {
+            animation: fadeIn 0.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .discount-badge {
+            background-color: #dc3545;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header class="bg-success text-white py-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div >
+                    <h1 class="mb-0">Green Garden</h1>
+                    <p class="mb-0">Посадка растений и ландшафтные услуг в Алматы</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="position-relative me-4">
+                        <button class="btn btn-link p-0 text-white" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+                            <i class="bi bi-cart3" style="font-size: 1.5rem;"></i>
+                        </button>
+                        <span class="cart-badge badge bg-danger rounded-circle" id="cart-badge">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a href="#" class="nav-link active">Главная</a></li>
+                    <li class="nav-item"><a href="#plants" class="nav-link">Растения</a></li>
+                    <li class="nav-item"><a href="#landscape" class="nav-link">Ландшафтные услуги</a></li>
+                    <li class="nav-item"><a href="#calculator" class="nav-link">Калькулятор</a></li>
+                    <li class="nav-item"><a href="#podwal" class="nav-link">О нас</a></li>
+                    <li class="nav-item"><a href="#podwal" class="nav-link">Контакты</a></li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Поиск растений...">
+                    <button class="btn btn-success" type="submit">Найти</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Слайдер (Swiper) -->
+    <div class="swiper hero-slider">
+        <div class="mb-5">
+            <div class="position-absolute bottom-0 start-0 w-100 p-5 text-white" style="background: rgb(225, 200, 0);">
+        <h2>Скидка 10% для услуг</h2>
+        <p>При покупке 200м²</p>
+        <a href="#calculator"><button class="btn btn-light">Смотреть</button></a>
+    </div>
+</div>                  
+</div>
+
+    <!-- Раздел ландшафтных услуг -->
+    <section id="landscape" class="landscape-section">
+        <div class="container">
+            <h2 class="text-center mb-5">Ландшафтные услуги и товары</h2>
+            
+            <!-- Услуги -->
+            
+            <!-- Товары -->
+            <div class="mb-5">
+                <h3 class="text-center mb-4">Ландшафтные товары</h3>
+                <div class="row g-4" id="landscape-products-container">
+                    <!-- Товары будут загружены через JS -->
+                </div>
+            </div>
+            
+            <!-- Полный прайс-лист -->
+            <div class="mt-5">
+                <h3 class="text-center mb-4">Полный прайс-лист</h3>
+                
+                <div class="accordion" id="priceAccordion">
+                    <!-- Услуги -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingServices">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseServices" aria-expanded="true">
+                                Цены на услуги
+                            </button>
+                        </h2>
+                        <div id="collapseServices" class="accordion-collapse collapse show" aria-labelledby="headingServices">
+                            <div class="accordion-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Услуга</th>
+                                            <th>Цена</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Укладка газона</td>
+                                            <td>от 2 500 ₸/м²</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Посев газона</td>
+                                            <td>от 2 000 ₸/м²</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Установка автополива (Hunter)</td>
+                                            <td>от 800 000 ₸</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Установка бордюрной ленты</td>
+                                            <td>от 1 000 ₸/м</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Посадка растений</td>
+                                            <td>от 5 000 ₸/шт</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ландшафтный дизайн (с визуализацией)</td>
+                                            <td>от 100 000 ₸/100м²</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ландшафтный дизайн (без визуализации)</td>
+                                            <td>от 50 000 ₸</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Укладка брусчатки</td>
+                                            <td>от 5 000 ₸/м²</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Установка освещения</td>
+                                            <td>от 5 000 ₸/шт</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Товары -->
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingGoods">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGoods">
+                                Цены на товары
+                            </button>
+                        </h2>
+                        <div id="collapseGoods" class="accordion-collapse collapse" aria-labelledby="headingGoods">
+                            <div class="accordion-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Товар</th>
+                                            <th>Цена</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Рулонный газон</td>
+                                            <td>от 2 800 ₸/м²</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Посевной газон</td>
+                                            <td>от 3 500 ₸/кг</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Удобрение НПК</td>
+                                            <td>от 3 000 ₸/кг</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Декоративная галька</td>
+                                            <td>от 4 500 ₸/25кг</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Кора лиственницы</td>
+                                            <td>от 3 500 ₸/мешок</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Бордюрная лента с колышками</td>
+                                            <td>от 15 000 ₸/15м</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Калькулятор услуг -->
+    <section id="calculator" class="py-5" style="background: linear-gradient(135deg, #e9f5e9 0%, #d4edda 100%);">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold mb-3">Калькулятор услуг</h2>
+                <p class="lead">Рассчитайте стоимость услуг по площади участка</p>
+            </div>
+            
+            <div class="calculator-card rounded-4 overflow-hidden shadow-lg">
+                <div class="row g-0">
+                    <!-- Левая часть - выбор услуг -->
+                    <div class="col-md-7 p-4" style="background-color: #f8f9fa;">
+                        <div id="calculator-step1">
+                            <h3 class="mb-4 pb-2 border-bottom"><i class="bi bi-check2-square me-2"></i> Выберите услуги</h3>
+                            
+                            <div class="mb-3">
+                                <label for="area-input" class="form-label">Площадь участка (м²)</label>
+                                <input type="number" class="form-control" id="area-input" min="1" value="100">
+                            </div>
+                            
+                            <div class="service-categories mb-4">
+                                <div class="tab-content mt-3" id="serviceTabContent">
+                                    <div class="tab-pane fade show active" id="services">
+                                        <div class="row row-cols-1 g-3" id="services-list">
+                                            <!-- Услуги будут загружены здесь -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mt-4">
+                                <div class="fw-bold" id="selected-count">Выбрано: 0</div>
+                                <button class="btn btn-success px-4 py-2" id="calculator-next">
+                                    Рассчитать стоимость <i class="bi bi-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Шаг 2: Расчет стоимости -->
+                        <div id="calculator-step2" style="display: none;">
+                            <div class="d-flex align-items-center mb-4">
+                                <button class="btn btn-outline-secondary me-3" id="calculator-back">
+                                    <i class="bi bi-arrow-left"></i>
+                                </button>
+                                <h3 class="mb-0"><i class="bi bi-calculator me-2"></i> Расчет стоимости</h3>
+                            </div>
+                            
+                            <div id="calculator-inputs" class="mb-4">
+                                <!-- Результаты расчета будут здесь -->
+                            </div>
+                            
+                            <div class="d-grid mt-4">
+                                <button class="btn btn-success btn-lg py-3" id="add-to-cart-calc">
+                                    <i class="bi bi-cart-plus me-2"></i> Добавить в корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Правая часть - предварительный просмотр -->
+                    <div class="col-md-5 p-4" style="background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);">
+                        <div class="text-white">
+                            <h3 class="mb-4"><i class="bi bi-receipt me-2"></i> Ваш заказ</h3>
+                            <div class="calculation-preview rounded-3 p-3 mb-4" style="background: rgba(255,255,255,0.15);">
+                                <div id="calculation-results" class="mb-3">
+                                    <div class="text-center py-5">
+                                        <i class="bi bi-cart" style="font-size: 3rem; opacity: 0.3;"></i>
+                                        <p class="mt-2">Выберите услуги</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex justify-content-between border-top border-white pt-3">
+                                    <h5>Итого:</h5>
+                                    <h5 id="calculation-total">0 ₸</h5>
+                                </div>
+                            </div>
+                            
+                            <div class="features">
+                                <div class="d-flex mb-3">
+                                    <div class="flex-shrink-0 me-3">
+                                        <i class="bi bi-check-circle" style="font-size: 1.5rem;"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Скидка 10%</h5>
+                                        <p class="small mb-0">При площади 200 м²</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-flex mb-3">
+                                    <div class="flex-shrink-0 me-3">
+                                        <i class="bi bi-check-circle" style="font-size: 1.5rem;"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Предоплата 50-70%</h5>
+                                        <p class="small mb-0">Остальное после выполнения работы</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Каталог товаров (растения) -->
+    <section id="plants" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Популярные растения</h2>
+            <div class="row" id="products-container">
+                <!-- Товары будут загружены через JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Подвал -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>Контакты</h5>
+                    <p>+7 (747) 699-94-31</p>
+                    <p>
+                        <a href="https://wa.me/77476999431" class="btn whatsapp-btn mt-2">
+                            <i class="bi bi-whatsapp"></i> WhatsApp: 8 747 699 94 31
+                        </a>
+                    </p>
+                </div>
+                <div class="col-md-4 mb-3" id="podwal">
+                    <h5>Мы в соцсетях</h5>
+                    <div class="d-flex">
+                        <a href="https://instagram.com/green_garden.almaty" class="text-white me-3">Instagram</a>
+                        <a href="https://www.facebook.com/profile.php?id=61575263883161&mibextid=wwXIfr" class="text-white">Facebook</a>
+                    </div>
+                    <h5 class="mt-3">Услуги</h5>
+                    <p>Ландшафтный дизайн<br>Озеленение<br>Системы полива</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Оплата и доставка</h5>
+                    <p>Принимаем Kaspi, наличные</p>
+                    <p>Доставка по всему городу</p>
+                    <p>Работаем с 9:00 до 20:00</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Offcanvas Корзина -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartOffcanvas">
+        <div class="offcanvas-header bg-success text-white me-3">
+            <h5 class="offcanvas-title">Ваша корзина</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <div id="cart-items-container">
+                <!-- Товары в корзине будут загружены здесь -->
+            </div>
+            <div class="p-3 border-top">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Итого:</span>
+                    <strong id="cart-total-price">0 ₸</strong>
+                </div>
+                <button class="btn btn-success w-100 mt-3" id="checkout-btn">
+                    <i class="bi bi-whatsapp me-2"></i> Оформить заказ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Скрипты -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        // Инициализация слайдера
+        const swiper = new Swiper('.hero-slider', {
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            autoplay: {
+                delay: 5000,
+            },
+        });
+
+        // Товары (растения)
+        const plants = [
+            {id: 1, name: "Туя 1 метр от", price: 10000, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdLHdPJtNgdSKsk1-zAfa2xjg6Rd6K0F0Jig&s", type: "plant"},
+            {id: 2, name: "Сосна обыкнавенная 2-3 метра от", price: 25000, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0B-j15S0-UlujG8SR0FBliRWFsE7mo3ey2w&s", type: "plant"},
+            {id: 3, name: "Можевельник от", price: 12000, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcST4lmrY1U23kWcCFoxUE6vSPK9WLF_Qkr7eQ&s", type: "plant"},
+            {id: 4, name: "Туя шаровидная от", price: 15000, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHfMhdJtOOXtEpS-8gx-W_DF71WHz3fi7HJw&s", type: "plant"},
+            {id: 5, name: "Гортензия от", price: 8000, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTwdHt0BcOCU-JIN6AZ1n7n45yOH7dH97DLA&s", type: "plant"},
+            {id: 6, name: "Барбарис от", price: 8000, image: "https://plodopitomnik-sad.kz/upload/resize_cache/iblock/2d9/9eyiravspyfl9gnc8exs4s0w0ck10dmr/400_400_1/Atropurpurea-nana.jpg", type: "plant"},
+            {id: 7, name: "Ирис от", price: 8000, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA7L33VvU1NaI2CmciLLfM4JdT0erM8UvFSQ&s", type: "plant"},
+            {id: 8, name: "Лаванда от", price: 8000, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAmvozNypFtg6T101-Kndkb1picrNMb7Tvsw&s", type: "plant"},
+        ];
+
+        // Ландшафтные товары
+        const landscapeProducts = [
+            {id: 101, name: "Рулонный газон", price: 2800, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx05ibuIvnoTBTg_HVW-B-T9dHXDd1zOl_wA&s", type: "landscape-product", unit: "м²"},
+            {id: 102, name: "Семена газонных трав", price: 3500, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ43SFqBOwFeYX2JLl9lEAKv_Ahnx_V6E3Iw&s", type: "landscape-product", unit: "кг"},
+            {id: 103, name: "Декоративная галька", price: 4500, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLbQzaSwzNDlh1GyA6E0E1Sq2rLImfnF0wSg&s", unit: "25кг"},
+            {id: 104, name: "Бордюрная лента", price: 1000, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVEjiVQmj8R-1ftNQL6pZcxPovkrwk6M407Q&s", type: "landscape-product", unit: "15м"},
+            {id: 105, name: "Удобрение НПК", price: 3000, image: "https://gallaorolkaliyfosfat.uz/wp-content/uploads/2021/12/apk-news.ru_sunflower_1.jpg", type: "landscape-product", unit: "кг"},
+            {id: 106, name: "Кора лиственницы", price: 3500, image: "https://mulcha.kz/cache/imagine/_webp_/460x440/2023-12/kora-listvennicj-2.jpg.webp", type: "landscape-product", unit: "мешок"},
+        ];
+
+        // Услуги
+        const services = [
+            {id: 201, name: "Озеленение участков", price: 50000, image: "https://via.placeholder.com/300x300?text=Озеленение", type: "service", description: "Разработка ландшафтного дизайна, посадка деревьев, создание газонов"},
+            {id: 202, name: "Укладка рулонного газона", price: 2500, image: "https://via.placeholder.com/300x300?text=Укладка+газона", type: "service", unit: "м²", description: "Планировка, подготовка почвы, укладка и уход"},
+            {id: 203, name: "Гидропосев (гидросев)", price: 2000, image: "https://via.placeholder.com/300x300?text=Гидропосев", type: "service", unit: "м²", description: "Быстрый способ озеленения больших территорий"},
+            {id: 204, name: "Монтаж автополива", price: 800000, image: "https://via.placeholder.com/300x300?text=Автополив", type: "service", description: "Установка систем полива Hunter/Rain Bird"},
+            {id: 205, name: "Укладка брусчатки", price: 5000, image: "https://via.placeholder.com/300x300?text=Брусчатка", type: "service", unit: "м²", description: "Подготовка основания, укладка плитки"},
+            {id: 206, name: "Ландшафтный дизайн", price: 100000, image: "https://via.placeholder.com/300x300?text=Дизайн", type: "service", unit: "100м²", description: "Создание проекта с визуализацией"},
+        ];
+
+        // Корзина
+        let cart = JSON.parse(localStorage.getItem('cart')) || {};
+        let customerData = {};
+
+        // Обновление бейджа корзины
+        function updateCartBadge() {
+            const totalItems = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
+            $('#cart-badge').text(totalItems);
+        }
+
+        // Добавление товара/услуги в корзину
+        function addToCart(item) {
+            const itemId = item.id;
+            
+            if (cart[itemId]) {
+                cart[itemId].quantity += 1;
+            } else {
+                cart[itemId] = {
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    quantity: 1,
+                    image: item.image,
+                    type: item.type,
+                    unit: item.unit || '',
+                    description: item.description || ''
+                };
+            }
+            
+            // Сохраняем в localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Обновляем интерфейс
+            updateCartBadge();
+            renderCartItems();
+            
+            // Показываем уведомление
+            const toast = $(`
+                <div class="toast align-items-center text-white bg-success border-0 position-fixed bottom-0 end-0 m-3" role="alert">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            "${item.name}" добавлен(а) в корзину
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            `);
+            
+            $('body').append(toast);
+            new bootstrap.Toast(toast[0]).show();
+            
+            // Автоматически скрываем через 3 секунды
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Удаление товара из корзины
+        function removeFromCart(itemId) {
+            if (cart[itemId]) {
+                delete cart[itemId];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartBadge();
+                renderCartItems();
+            }
+        }
+
+        // Изменение количества товара
+        function changeQuantity(itemId, change) {
+            if (cart[itemId]) {
+                cart[itemId].quantity += change;
+                
+                // Если количество стало 0, удаляем товар
+                if (cart[itemId].quantity <= 0) {
+                    delete cart[itemId];
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartBadge();
+                renderCartItems();
+            }
+        }
+
+        // Отрисовка товаров в корзине
+        function renderCartItems() {
+            const container = $('#cart-items-container');
+            container.empty();
+            
+            const cartItems = Object.values(cart);
+            
+            if (cartItems.length === 0) {
+                container.html(`
+                    <div class="cart-empty p-5">
+                        <i class="bi bi-cart-x" style="font-size: 4rem; opacity: 0.2;"></i>
+                        <h5 class="mt-3">Ваша корзина пуста</h5>
+                        <p class="text-muted">Добавьте товары из каталога</p>
+                    </div>
+                `);
+                $('#cart-total-price').text('0 ₸');
+                return;
+            }
+            
+            let totalPrice = 0;
+            
+            cartItems.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                totalPrice += itemTotal;
+                
+                container.append(`
+                    <div class="cart-item border-bottom p-3">
+                        <div class="d-flex">
+                            ${item.image ? `<img src="${item.image}" class="cart-item-img me-3" alt="${item.name}">` : ''}
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">${item.name}</h6>
+                                ${item.unit ? `<small class="text-muted">${item.unit}</small>` : ''}
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="changeQuantity('${item.id}', -1)">-</button>
+                                        <span class="mx-2">${item.quantity}</span>
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="changeQuantity('${item.id}', 1)">+</button>
+                                    </div>
+                                    <div>
+                                        <span class="fw-bold">${itemTotal.toLocaleString()} ₸</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-link text-danger ms-2" onclick="removeFromCart('${item.id}')">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `);
+            });
+            
+            $('#cart-total-price').text(`${totalPrice.toLocaleString()} ₸`);
+        }
+
+        // Отрисовка каталога растений
+        function renderPlants() {
+            const container = $('#products-container');
+            let html = '';
+            
+            plants.forEach(plant => {
+                html += `
+                <div class="col-md-3 mb-4">
+                    <div class="card product-card h-100">
+                        <img src="${plant.image}" class="card-img-top product-img" alt="${plant.name}">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">${plant.name}</h5>
+                            <p class="card-text fw-bold">${plant.price.toLocaleString()} ₸</p>
+                            <button class="btn btn-success add-to-cart mt-auto" data-id="${plant.id}" data-type="plant">
+                                <i class="bi bi-cart-plus me-1"></i> В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            
+            container.html(html);
+        }
+        
+        // Отрисовка ландшафтных товаров
+        function renderLandscapeProducts() {
+            const container = $('#landscape-products-container');
+            let html = '';
+            
+            landscapeProducts.forEach(product => {
+                html += `
+                <div class="col-md-3 mb-4">
+                    <div class="card product-card h-100">
+                        <img src="${product.image}" class="card-img-top product-img" alt="${product.name}">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text fw-bold">${product.price.toLocaleString()} ₸${product.unit ? `/${product.unit}` : ''}</p>
+                            <button class="btn btn-success add-to-cart mt-auto" data-id="${product.id}" data-type="landscape-product">
+                                <i class="bi bi-cart-plus me-1"></i> В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            
+            container.html(html);
+        }
+        
+        // Отрисовка услуг
+        function renderServices() {
+            const container = $('#services-container');
+            let html = '';
+            
+            services.forEach(service => {
+                html += `
+                <div class="col-md-4 mb-4">
+                    <div class="service-card h-100">
+                        <div class="service-header">
+                            <h4>${service.name}</h4>
+                        </div>
+                        <div class="service-body">
+                            <p class="mb-2">${service.description}</p>
+                            <p class="service-price">${service.price.toLocaleString()} ₸${service.unit ? `/${service.unit}` : ''}</p>
+                            <button class="btn btn-success add-service-btn add-to-cart" data-id="${service.id}" data-type="service">
+                                <i class="bi bi-cart-plus me-1"></i> Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+            });
+            
+            container.html(html);
+        }
+        
+        // Калькулятор услуг
+        const calculatorServices = [
+            { 
+                id: "lawn-install", 
+                name: "Укладка газона", 
+                price: 2500, 
+                unit: "м²", 
+                description: "Рулонный газон с подготовкой грунта",
+                hasDiscount: true
+            },
+            { 
+                id: "lawn-seeding", 
+                name: "Посев газона", 
+                price: 2000, 
+                unit: "м²", 
+                description: "Гидропосев с удобрениями",
+                hasDiscount: true
+            },
+            { 
+                id: "irrigation", 
+                name: "Система автополива", 
+                price: 800, 
+                unit: "м²", 
+                description: "Монтаж системы Hunter",
+                hasDiscount: true
+            },
+            { 
+                id: "border-tape", 
+                name: "Установка бордюрной ленты", 
+                price: 1000, 
+                unit: "м", 
+                description: "С установкой колышков",
+                hasDiscount: false
+            },
+            { 
+                id: "landscape-design", 
+                name: "Ландшафтный дизайн", 
+                price: 1000, 
+                unit: "м²", 
+                description: "С 3D визуализацией",
+                hasDiscount: true
+            },
+            { 
+                id: "paving", 
+                name: "Укладка брусчатки", 
+                price: 5000, 
+                unit: "м²", 
+                description: "С подготовкой основания",
+                hasDiscount: true
+            }
+        ];
+        
+        let selectedServices = {};
+        let calculationResults = {};
+        
+        // Инициализация калькулятора
+        function initCalculator() {
+            // Отрисовка услуг в калькуляторе
+            const container = $("#services-list");
+            container.empty();
+            
+            calculatorServices.forEach(service => {
+                container.append(`
+                <div class="col">
+                    <div class="service-card h-100 position-relative">
+                        <div class="form-check m-0 h-100">
+                            <input class="form-check-input service-check" 
+                                   type="checkbox" 
+                                   id="service-${service.id}" 
+                                   data-id="${service.id}">
+                            <label class="form-check-label card h-100 m-0" for="service-${service.id}">
+                                <div class="card-header bg-transparent border-0 pb-0">
+                                    <h5 class="mb-0">${service.name}</h5>
+                                </div>
+                                <div class="card-body pt-2">
+                                    <p class="small text-muted mb-2">${service.description}</p>
+                                    <div class="service-price">
+                                        ${service.price.toLocaleString()} ₸
+                                        <span class="text-muted">/${service.unit}</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>`);
+            });
+            
+            // Обработка выбора услуг
+            $('.service-check').change(function() {
+                const serviceId = $(this).data('id');
+                const service = calculatorServices.find(s => s.id === serviceId);
+                const card = $(this).closest('.service-card');
+                
+                if ($(this).is(':checked')) {
+                    selectedServices[serviceId] = service;
+                    card.addClass('border-success');
+                    card.css('box-shadow', '0 5px 15px rgba(40, 167, 69, 0.2)');
+                } else {
+                    delete selectedServices[serviceId];
+                    card.removeClass('border-success');
+                    card.css('box-shadow', '');
+                }
+                
+                updateSelectedCount();
+            });
+            
+            // Обновление счетчика выбранных услуг
+            function updateSelectedCount() {
+                const count = Object.keys(selectedServices).length;
+                $('#selected-count').text(`Выбрано: ${count}`);
+            }
+            
+            // Переход к шагу 2
+            $('#calculator-next').click(function() {
+                const area = parseInt($('#area-input').val()) || 100;
+                
+                if (Object.keys(selectedServices).length === 0) {
+                    alert('Выберите хотя бы одну услугу');
+                    return;
+                }
+                
+                $('#calculator-inputs').empty();
+                let html = '';
+                
+                Object.values(selectedServices).forEach(service => {
+                    let price = service.price * area;
+                    let discountApplied = false;
+                    
+                    // Применение скидки 10% при площади > 200 м²
+                    if (area > 199 && service.hasDiscount) {
+                        price *= 0.9;
+                        discountApplied = true;
+                    }
+                    
+                    html += `
+                    <div class="area-input mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="mb-0">${service.name}</h5>
+                            ${discountApplied ? '<span class="discount-badge">СКИДКА 10%</span>' : ''}
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="text-muted">${area} ${service.unit}</div>
+                            <div class="service-price">${price.toLocaleString()} ₸</div>
+                        </div>
+                    </div>`;
+                    
+                    // Сохраняем результат для добавления в корзину
+                    calculationResults[service.id] = {
+                        service: service,
+                        area: area,
+                        price: price,
+                        discountApplied: discountApplied
+                    };
+                });
+                
+                $('#calculator-inputs').html(html);
+                
+                // Обновляем итоговую сумму
+                updateTotalPrice();
+                
+                // Переключаем шаги
+                $('#calculator-step1').hide();
+                $('#calculator-step2').show();
+            });
+            
+            // Обновление итоговой стоимости
+            function updateTotalPrice() {
+                let total = 0;
+                Object.values(calculationResults).forEach(item => {
+                    total += item.price;
+                });
+                $('#calculation-total').text(`${total.toLocaleString()} ₸`);
+                
+                // Обновляем список в предпросмотре
+                let resultsHtml = '';
+                Object.values(calculationResults).forEach(item => {
+                    resultsHtml += `
+                    <div class="d-flex justify-content-between mb-2">
+                        <div>${item.service.name}</div>
+                        <div>${item.price.toLocaleString()} ₸</div>
+                    </div>`;
+                });
+                $('#calculation-results').html(resultsHtml);
+            }
+            
+            // Возврат к шагу 1
+            $('#calculator-back').click(function() {
+                $('#calculator-step2').hide();
+                $('#calculator-step1').show();
+            });
+            
+            // Добавление в корзину
+            $('#add-to-cart-calc').click(function() {
+                Object.values(calculationResults).forEach(item => {
+                    const cartItem = {
+                        id: `service-${item.service.id}-${Date.now()}`,
+                        name: `${item.service.name}${item.discountApplied ? ' (со скидкой 10%)' : ''}`,
+                        price: item.price,
+                        quantity: 1,
+                        image: "",
+                        type: "service",
+                        unit: `${item.area} ${item.service.unit}`,
+                        description: item.service.description
+                    };
+                    
+                    addToCart(cartItem);
+                });
+                
+                // Показываем уведомление
+                const toast = $(`
+                    <div class="toast align-items-center text-white bg-success border-0 position-fixed bottom-0 end-0 m-3" role="alert">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                Услуги добавлены в корзину!
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                        </div>
+                    </div>
+                `);
+                
+                $('body').append(toast);
+                new bootstrap.Toast(toast[0]).show();
+                
+                // Возвращаемся на первый шаг
+                $('#calculator-step2').hide();
+                $('#calculator-step1').show();
+                
+                // Сбрасываем выбор
+                $('.service-check').prop('checked', false).trigger('change');
+                selectedServices = {};
+                calculationResults = {};
+                updateSelectedCount();
+                $('#calculation-results').html('<div class="text-center py-5"><i class="bi bi-cart" style="font-size: 3rem; opacity: 0.3;"></i><p class="mt-2">Выберите услуги</p></div>');
+                $('#calculation-total').text('0 ₸');
+                
+                setTimeout(() => {
+                    toast.remove();
+                }, 3000);
+            });
+        }
+
+        // Инициализация при загрузке страницы
+        $(document).ready(function() {
+            renderPlants();
+            renderLandscapeProducts();
+            renderServices();
+            updateCartBadge();
+            renderCartItems();
+            initCalculator();
+            
+            // Обработчик добавления в корзину
+            $(document).on('click', '.add-to-cart', function() {
+                const itemId = $(this).data('id');
+                const itemType = $(this).data('type');
+                
+                let item;
+                
+                // Находим товар в соответствующем массиве
+                if (itemType === 'plant') {
+                    item = plants.find(p => p.id === itemId);
+                } else if (itemType === 'landscape-product') {
+                    item = landscapeProducts.find(p => p.id === itemId);
+                } else if (itemType === 'service') {
+                    item = services.find(s => s.id === itemId);
+                }
+                
+                if (item) {
+                    addToCart(item);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
