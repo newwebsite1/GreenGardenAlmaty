@@ -15,7 +15,7 @@
             --primary: #28a745;
             --secondary: #f8f9fa;
         }
-        .hero-slider { height: 220px; }
+        .hero-slider { height: 210px; }
         .product-card { 
             transition: transform 0.3s, box-shadow 0.3s; 
             height: 100%;
@@ -144,6 +144,7 @@
             transition: all 0.3s ease;
             height: 250px;
             overflow: hidden;
+            position: relative;
         }
         .portfolio-item img {
             transition: transform 0.5s ease;
@@ -163,9 +164,17 @@
             background: rgba(40, 167, 69, 0.85);
             opacity: 0;
             transition: opacity 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .portfolio-item:hover .portfolio-overlay {
             opacity: 1;
+        }
+        .portfolio-overlay-content {
+            text-align: center;
+            color: white;
+            padding: 15px;
         }
         
         /* Стили для калькулятора */
@@ -249,12 +258,12 @@
         }
     </style>
 </head>
-<body background="work13.jpg" >
+<body>
     <!-- Шапка сайта -->
     <header class="bg-success text-white py-3">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <div >
+                <div>
                     <h1 class="mb-0">Green Garden</h1>
                     <p class="mb-0">Посадка растений и ландшафтные услуг в Алматы</p>
                 </div>
@@ -273,13 +282,16 @@
     <!-- Навигация -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <div class="collapse navbar-collapse">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a href="#" class="nav-link active">Главная</a></li>
                     <li class="nav-item"><a href="#plants" class="nav-link">Растения</a></li>
                     <li class="nav-item"><a href="#landscape" class="nav-link">Ландшафтные услуги</a></li>
                     <li class="nav-item"><a href="#calculator" class="nav-link">Калькулятор</a></li>
-                    <li class="nav-item"><a href="#podwal" class="nav-link">О нас</a></li>
+                    <li class="nav-item"><a href="#portfolio" class="nav-link">Портфолио</a></li>
                     <li class="nav-item"><a href="#podwal" class="nav-link">Контакты</a></li>
                 </ul>
                 <form class="d-flex">
@@ -292,14 +304,17 @@
 
     <!-- Слайдер (Swiper) -->
     <div class="swiper hero-slider">
-        <div class="mb-5">
-            <div class="position-absolute bottom-0 start-0 w-100 p-5 text-white" style="background: rgb(225, 200, 0);">
-        <h2>Скидка 10% для услуг</h2>
-        <p>При покупке 200м²</p>
-        <a href="#calculator"><button class="btn btn-light">Смотреть</button></a>
+        <div class="swiper-wrapper">
+            <div class="swiper-slide position-relative">
+                <div class="position-absolute bottom-0 start-0 w-100 p-5 text-white" style="background: rgb(225, 200, 0);">
+                    <h2>Скидка 10% для услуг</h2>
+                    <p>При покупке 200м²</p>
+                    <a href="#calculator"><button class="btn btn-light">Смотреть</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
     </div>
-</div>                  
-</div>
 
     <!-- Раздел ландшафтных услуг -->
     <section id="landscape" class="landscape-section">
@@ -307,6 +322,12 @@
             <h2 class="text-center mb-5">Ландшафтные услуги и товары</h2>
             
             <!-- Услуги -->
+            <div class="mb-5">
+                <h3 class="text-center mb-4">Ландшафтные услуги</h3>
+                <div class="row g-4" id="services-container">
+                    <!-- Услуги будут загружены через JS -->
+                </div>
+            </div>
             
             <!-- Товары -->
             <div class="mb-5">
@@ -431,395 +452,15 @@
         </div>
     </section>
 
-        <!-- Добавить после раздела ландшафтных услуг и перед разделом растений -->
-<section id="portfolio" class="py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-5">Наши работы</h2>
-        <div class="row g-4">
-            <!-- Галерея из 12 работ -->
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work1.jpg" class="img-fluid" alt="Работа 1" loading="lazy" width="400px" height="300px">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Ландшафтный дизайн</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work2.jpg" class="img-fluid" alt="Работа 2" loading="lazy" >
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Ландшафтный дизайн</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work3.jpg" class="img-fluid" alt="Работа 3" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Ландшафтный дизайн</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work4.jpg" class="img-fluid" alt="Работа 4" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Ландшафтный дизайн</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work5.jpg" class="img-fluid" alt="Работа 5" loading="lazy" width="400px" height="300px">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work6.jpg" class="img-fluid" alt="Работа 6" loading="lazy" >
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work7.jpg" class="img-fluid" alt="Работа 7" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Озеленение территории</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work8.jpg" class="img-fluid" alt="Работа 8" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Озеленение территории</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                <div class="col-md-4 col-6">
-                    <div class="portfolio-item position-relative overflow-hidden rounded">
-                        <img src="work9.jpg" class="img-fluid" alt="Работа 9" loading="lazy" width="400px" height="300px">
-                            <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                                <div class="text-center text-white p-3">
-                            <h5>Озеленение территории</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work10.jpg" class="img-fluid" alt="Работа 10" loading="lazy" >
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work11.jpg" class="img-fluid" alt="Работа 11" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work12.jpg" class="img-fluid" alt="Работа 12" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-                    <div class="col-md-4 col-6">
-                        <div class="portfolio-item position-relative overflow-hidden rounded">
-                            <img src="work16.jpg" class="img-fluid" alt="Работа 1" loading="lazy" width="400px" height="300px">
-                                <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Ландшафтный дизайн</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work17.jpg" class="img-fluid" alt="Работа 2" loading="lazy" >
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Ландшафтный дизайн</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work18.jpg" class="img-fluid" alt="Работа 3" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Ландшафтный дизайн</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work19.jpg" class="img-fluid" alt="Работа 4" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Ландшафтный дизайн</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work20.jpg" class="img-fluid" alt="Работа 5" loading="lazy" width="400px" height="300px">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work21.jpg" class="img-fluid" alt="Работа 6" loading="lazy" >
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work22.jpg" class="img-fluid" alt="Работа 7" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Озеленение территории</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work23.jpg" class="img-fluid" alt="Работа 8" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Озеленение территории</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work24.jpg" class="img-fluid" alt="Работа 9" loading="lazy" width="400px" height="300px">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Озеленение территории</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work25.jpg" class="img-fluid" alt="Работа 10" loading="lazy" >
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work26.jpg" class="img-fluid" alt="Работа 11" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work27.jpg" class="img-fluid" alt="Работа 12" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                <div class="col-md-4 col-6">
-                    <div class="portfolio-item position-relative overflow-hidden rounded">
-                        <img src="work28.jpg" class="img-fluid" alt="Работа 13" loading="lazy" style="width: 300; height: 300;">
-                            <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                                <div class="text-center text-white p-3">
-                            <h5>Логотип</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work29.jpg" class="img-fluid" alt="Работа 1" loading="lazy" width="400px" height="300px">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Ландшафтный дизайн</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work30.jpg" class="img-fluid" alt="Работа 2" loading="lazy" >
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Ландшафтный дизайн</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work31.jpg" class="img-fluid" alt="Работа 3" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Ландшафтный дизайн</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work32.jpg" class="img-fluid" alt="Работа 4" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Ландшафтный дизайн</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work33.jpg" class="img-fluid" alt="Работа 5" loading="lazy" width="400px" height="300px">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work34.jpg" class="img-fluid" alt="Работа 6" loading="lazy" >
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work35.jpg" class="img-fluid" alt="Работа 7" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Озеленение территории</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work36.jpg" class="img-fluid" alt="Работа 8" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Озеленение территории</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                        <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work37.jpg" class="img-fluid" alt="Работа 9" loading="lazy" width="400px" height="300px">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Озеленение территории</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work38.jpg" class="img-fluid" alt="Работа 10" loading="lazy" >
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work39.jpg" class="img-fluid" alt="Работа 11" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             <div class="col-md-4 col-6">
-                <div class="portfolio-item position-relative overflow-hidden rounded">
-                    <img src="work40.jpg" class="img-fluid" alt="Работа 12" loading="lazy">
-                    <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                        <div class="text-center text-white p-3">
-                            <h5>Декорация</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                <div class="col-md-4 col-6">
-                    <div class="portfolio-item position-relative overflow-hidden rounded">
-                        <img src="work13.jpg" class="img-fluid" alt="Работа 13" loading="lazy" style="width: 300; height: 300;">
-                            <div class="portfolio-overlay d-flex align-items-center justify-content-center">
-                                <div class="text-center text-white p-3">
-                            <h5>Логотип</h5>
-                        </div>
-                    </div>
-                </div>
+    <!-- Портфолио -->
+    <section id="portfolio" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Наши работы</h2>
+            <div class="row g-4" id="portfolio-container">
+                <!-- Портфолио будет сгенерировано через JS -->
             </div>
         </div>
-    </div>
-</section>
-
+    </section>
 
     <!-- Калькулятор услуг -->
     <section id="calculator" class="py-5" style="background: linear-gradient(135deg, #e9f5e9 0%, #d4edda 100%);">
@@ -1023,7 +664,7 @@
         const landscapeProducts = [
             {id: 101, name: "Рулонный газон", price: 2800, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx05ibuIvnoTBTg_HVW-B-T9dHXDd1zOl_wA&s", type: "landscape-product", unit: "м²"},
             {id: 102, name: "Семена газонных трав", price: 3500, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJ43SFqBOwFeYX2JLl9lEAKv_Ahnx_V6E3Iw&s", type: "landscape-product", unit: "кг"},
-            {id: 103, name: "Декоративная галька", price: 4500, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLbQzaSwzNDlh1GyA6E0E1Sq2rLImfnF0wSg&s", unit: "25кг"},
+            {id: 103, name: "Декоративная галька", price: 4500, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLbQzaSwzNDlh1GyA6E0E1Sq2rLImfnF0wSg&s", type: "landscape-product", unit: "25кг"},
             {id: 104, name: "Бордюрная лента", price: 1000, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVEjiVQmj8R-1ftNQL6pZcxPovkrwk6M407Q&s", type: "landscape-product", unit: "15м"},
             {id: 105, name: "Удобрение НПК", price: 3000, image: "https://gallaorolkaliyfosfat.uz/wp-content/uploads/2021/12/apk-news.ru_sunflower_1.jpg", type: "landscape-product", unit: "кг"},
             {id: 106, name: "Кора лиственницы", price: 3500, image: "https://mulcha.kz/cache/imagine/_webp_/460x440/2023-12/kora-listvennicj-2.jpg.webp", type: "landscape-product", unit: "мешок"},
@@ -1174,6 +815,48 @@
             });
             
             $('#cart-total-price').text(`${totalPrice.toLocaleString()} ₸`);
+        }
+
+        // Генерация портфолио (40 работ)
+        function renderPortfolio() {
+            const container = $('#portfolio-container');
+            const categories = [
+                "Ландшафтный дизайн",
+                "Озеленение территории",
+                "Декорация",
+                "Ландшафтный дизайн"
+            ];
+            
+            let html = '';
+            
+            for (let i = 1; i <= 40; i++) {
+                // Определяем категорию для работы
+                let category;
+                if (i <= 12) {
+                    category = categories[0];
+                } else if (i <= 24) {
+                    category = categories[1];
+                } else if (i <= 36) {
+                    category = categories[2];
+                } else {
+                    category = categories[3];
+                }
+                
+                html += `
+                <div class="col-md-4 col-6">
+                    <div class="portfolio-item position-relative overflow-hidden rounded">
+                        <img src="work${i}.jpg" class="img-fluid" alt="Работа ${i}" loading="lazy" width="400" height="300">
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-overlay-content">
+                                <h5>${category}</h5>
+                                <p>Работа #${i}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+            }
+            
+            container.html(html);
         }
 
         // Отрисовка каталога растений
@@ -1496,9 +1179,31 @@
             renderPlants();
             renderLandscapeProducts();
             renderServices();
+            renderPortfolio();
             updateCartBadge();
             renderCartItems();
             initCalculator();
+            
+            // Обработчик оформления заказа
+            $('#checkout-btn').click(function() {
+                const cartItems = Object.values(cart);
+                if (cartItems.length === 0) {
+                    alert('Ваша корзина пуста!');
+                    return;
+                }
+                
+                // Формируем сообщение для WhatsApp
+                let message = "Здравствуйте! Я хочу заказать следующие товары/услуги:%0A%0A";
+                
+                cartItems.forEach(item => {
+                    message += `- ${item.name}${item.unit ? ` (${item.unit})` : ''}: ${item.quantity} шт. x ${item.price.toLocaleString()} ₸ = ${(item.price * item.quantity).toLocaleString()} ₸%0A`;
+                });
+                
+                message += `%0AИтого: ${Object.values(cart).reduce((sum, item) => sum + item.price * item.quantity, 0).toLocaleString()} ₸`;
+                
+                // Открываем WhatsApp
+                window.open(`https://wa.me/77476999431?text=${message}`, '_blank');
+            });
             
             // Обработчик добавления в корзину
             $(document).on('click', '.add-to-cart', function() {
